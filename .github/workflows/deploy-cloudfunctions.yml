@@ -1,0 +1,51 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'node/**'
+      - '.github/workflows/deploy-cloudfunctions.yml'
+
+jobs:
+  deploy:
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: node/functions
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+      
+    - name: npm install
+      run: npm install
+
+    - name: Set up .firebaserc
+      run: echo -e "{\n  \"projects\":{\n    \"default\":\"${{ secrets.FIREBASE_PJ }}\"\n  }\n}" > ../.firebaserc
+
+    - name: Set up .env
+      run: echo "BEARER_TOKEN=${{ secrets.FIREBASE_BEARER_TOKEN }}" > .env
+
+    - name: Set credential json
+      run: echo ${{ secrets.GCLOUD_SERVICE_KEY }} | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
+
+    - name: Cache node_modules production packages
+      uses: actions/cache@v4
+      with:
+        path: node/functions/node_modules
+        key: ${{ runner.os }}-node-production-${{ hashFiles('node/functions/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-production-
+
+    - name: Deploy to Firebase
+      run: npm run deploy
