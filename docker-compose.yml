@@ -1,0 +1,52 @@
+services:
+  slim:
+    container_name: at_slim
+    build: ./docker/web
+    ports:
+      - 8000:80
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:/var/www/html
+      - ./docker/web/php.ini:/usr/local/etc/php/php.ini
+      - ./logs:/var/log/apache2
+    depends_on:
+      - db
+  
+  db:
+    container_name: at_db
+    image: mysql:5.7
+    platform: linux/x86_64
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_DATABASE: at
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3356:3306"
+    volumes:
+      - ./docker/db/conf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./src/logs:/var/log/mysql
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  
+  composer:
+    image: composer
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: composer install
+
+  db_check:
+    container_name: db_checker
+    image: mysql:5.7
+    platform: linux/x86_64
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./docker/db/wait-for-it.sh:/app/wait-for-it.sh
+    working_dir: /app
+    command: ./wait-for-it.sh at_db:3306 --timeout=30 --strict -- mysqladmin ping -h db -u root -prootpassword
