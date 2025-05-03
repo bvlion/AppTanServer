@@ -6,5 +6,5 @@ use App\Application\Actions\HealthCheck\HealthCheckAction;
 use Slim\App;
 
 return function (App $app) {
-  $app->get('/healthcheck',HealthCheckAction::class);
+  $app->get('/healthcheck', HealthCheckAction::class);
 };

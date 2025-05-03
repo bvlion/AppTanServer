@@ -3,6 +3,7 @@
 /coverage/
 /vendor/
 /logs/*
-!/logs/README.md
+!/logs/.gitkeep
+.env
 .phpunit.result.cache
 sa-caller.json
