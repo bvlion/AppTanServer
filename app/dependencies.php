@@ -9,6 +9,19 @@ use Monolog\Logger;
 use Monolog\Processor\UidProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use App\Application\Service\SearchWord\{
+    EventIngestionService,
+    FeedbackUpdateService,
+    MasterProjectionService
+};
+use App\Domain\SearchWordEvent\SearchWordEventRepository;
+use App\Domain\SearchWordFeedback\SearchWordFeedbackRepository;
+use App\Domain\SearchWordsMaster\SearchWordsMasterRepository;
+use App\Infrastructure\Persistence\SearchWord\{
+    PdoSearchWordEventRepository,
+    PdoSearchWordFeedbackRepository,
+    PdoSearchWordsMasterRepository
+};
 
 return function (ContainerBuilder $containerBuilder) {
   $containerBuilder->addDefinitions([
@@ -45,6 +58,26 @@ return function (ContainerBuilder $containerBuilder) {
           \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
           \PDO::ATTR_EMULATE_PREPARES => false,
         ]
+      );
+    },
+
+    SearchWordEventRepository::class => \DI\autowire(PdoSearchWordEventRepository::class),
+    SearchWordFeedbackRepository::class => \DI\autowire(PdoSearchWordFeedbackRepository::class),
+    SearchWordsMasterRepository::class => \DI\autowire(PdoSearchWordsMasterRepository::class),
+
+    FeedbackUpdateService::class => function (ContainerInterface $c) {
+      return new FeedbackUpdateService(
+        $c->get(SearchWordFeedbackRepository::class)
+      );
+    },
+  
+    MasterProjectionService::class => DI\autowire(),
+  
+    EventIngestionService::class => function (ContainerInterface $c) {
+      return new EventIngestionService(
+        $c->get(SearchWordEventRepository::class),
+        $c->get(MasterProjectionService::class),
+        $c->get(FeedbackUpdateService::class)
       );
     },
   ]);

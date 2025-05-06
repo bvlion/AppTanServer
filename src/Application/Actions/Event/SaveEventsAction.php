@@ -6,19 +6,19 @@ namespace App\Application\Actions\Event;
 
 use App\Application\Actions\Action;
 use App\Application\Actions\ActionPayload;
-use App\Domain\SearchWordEvent\SearchWordEventRepository;
+use App\Application\Service\SearchWord\EventIngestionService;
 use App\Domain\SearchWordEvent\SearchWordEvent;
 use Slim\Psr7\Response;
 use Psr\Log\LoggerInterface;
 
 class SaveEventsAction extends Action
 {
-  protected SearchWordEventRepository $eventRepository;
+  protected EventIngestionService $eventIngestionService;
 
-  public function __construct(LoggerInterface $logger, SearchWordEventRepository $eventRepository)
+  public function __construct(LoggerInterface $logger, EventIngestionService $eventIngestionService)
   {
     parent::__construct($logger);
-    $this->eventRepository = $eventRepository;
+    $this->eventIngestionService = $eventIngestionService;
   }
 
   /**
@@ -47,7 +47,7 @@ class SaveEventsAction extends Action
         timestamp: new \DateTime()
       );
 
-      $this->eventRepository->save($event);
+      $this->eventIngestionService->ingest($event);
     }
 
     return $this->respond(new ActionPayload(
