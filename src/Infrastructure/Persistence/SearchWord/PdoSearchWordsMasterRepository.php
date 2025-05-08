@@ -57,7 +57,6 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
       FROM search_words_master
       WHERE package_name = :package_name
         AND word = :word
-        AND source = 'ai_generated'
     SQL;
 
     $stmt = $this->pdo->prepare($sql);
@@ -74,6 +73,34 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
         $row['app_name'],
         $row['source'],
         $row['created_at']
+      );
+    }
+
+    return $results;
+  }
+
+  public function findByPackageAndAppName(string $packageName, string $appName): array
+  {
+    $sql = <<<SQL
+      SELECT package_name, word, app_name, source
+      FROM search_words_master
+      WHERE package_name = :package_name AND app_name = :app_name
+      ORDER BY created_at DESC
+    SQL;
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute([
+      ':package_name' => $packageName,
+      ':app_name' => $appName,
+    ]);
+
+    $results = [];
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $results[] = new SearchWordsMaster(
+        $row['package_name'],
+        $row['word'],
+        $row['app_name'],
+        $row['source'],
       );
     }
 
