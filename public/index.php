@@ -19,12 +19,8 @@ if (false) { // Should be set to true in production
 	$containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 
-if (file_exists(__DIR__ . '/../.env')) {
-  Dotenv\Dotenv::createImmutable(__DIR__ . '/../')->load();
-}
-if (file_exists(__DIR__ . '/../.env.dev')) {
-  Dotenv\Dotenv::createImmutable(__DIR__ . '/../', '.env.dev')->load();
-}
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 // Set up settings
 $settings = require __DIR__ . '/../app/settings.php';

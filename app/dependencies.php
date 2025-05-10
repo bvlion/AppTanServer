@@ -12,7 +12,8 @@ use Psr\Log\LoggerInterface;
 use App\Application\Service\SearchWord\{
     EventIngestionService,
     FeedbackUpdateService,
-    MasterProjectionService
+    MasterProjectionService,
+    AIWordGenerator
 };
 use App\Domain\SearchWordEvent\SearchWordEventRepository;
 use App\Domain\SearchWordFeedback\SearchWordFeedbackRepository;
@@ -22,6 +23,7 @@ use App\Infrastructure\Persistence\SearchWord\{
     PdoSearchWordFeedbackRepository,
     PdoSearchWordsMasterRepository
 };
+use GuzzleHttp\Client;
 
 return function (ContainerBuilder $containerBuilder) {
   $containerBuilder->addDefinitions([
@@ -65,20 +67,15 @@ return function (ContainerBuilder $containerBuilder) {
     SearchWordFeedbackRepository::class => \DI\autowire(PdoSearchWordFeedbackRepository::class),
     SearchWordsMasterRepository::class => \DI\autowire(PdoSearchWordsMasterRepository::class),
 
-    FeedbackUpdateService::class => function (ContainerInterface $c) {
-      return new FeedbackUpdateService(
-        $c->get(SearchWordFeedbackRepository::class)
+    AIWordGenerator::class => function (ContainerInterface $c) {
+      return new AIWordGenerator(
+        new Client(),
+        $_ENV['OPENAI_API_KEY']
       );
     },
-  
+
+    FeedbackUpdateService::class => DI\autowire(),
+    EventIngestionService::class => DI\autowire(),
     MasterProjectionService::class => DI\autowire(),
-  
-    EventIngestionService::class => function (ContainerInterface $c) {
-      return new EventIngestionService(
-        $c->get(SearchWordEventRepository::class),
-        $c->get(MasterProjectionService::class),
-        $c->get(FeedbackUpdateService::class)
-      );
-    },
   ]);
 };

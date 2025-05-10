@@ -13,28 +13,30 @@ class MasterProjectionService
 {
   public function __construct(
     private SearchWordEventRepository $eventRepository,
-    private SearchWordsMasterRepository $masterRepository
+    private SearchWordsMasterRepository $masterRepository,
+    private AIWordGenerator $generator
   ) {}
 
   public function updateFromInitOrRefresh(SearchWordEvent $event): void
   {
     $package = $event->getPackageName();
     $appName = $event->getWord();
+    $description = $event->getContext()['description'] ?? null;
 
     if (!$this->masterRepository->existsGeneratedWords($package, $appName)) {
-      $words = ['a', 'b', 'c']; // TODO AI generated words
+      $words = $this->generator->generateWords($package, $appName, $description);
       foreach ($words as $word) {
         $this->masterRepository->insert(new SearchWordsMaster(
           packageName: $package,
-          word: $word,
+          word: $word['word'],
           appName: $appName
         ));
         $this->eventRepository->save(new SearchWordEvent(
           id: null,
           packageName: $package,
-          word: $word,
+          word: $word['word'],
           eventType: 'ai_generated',
-          eventWeight: 1.0,
+          eventWeight: $word['weight'] / 100,
           context: ['app_name' => $appName],
           timestamp: new \DateTime()
         ));

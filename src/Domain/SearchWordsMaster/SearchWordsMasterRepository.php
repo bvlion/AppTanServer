@@ -11,7 +11,7 @@ interface SearchWordsMasterRepository
   /**
    * @return SearchWordsMaster[]
    */
-  public function existsGeneratedWords(string $packageName, string $word): array;
+  public function existsGeneratedWords(string $packageName, string $appName): array;
 
   public function exists(string $packageName, string $word, string $appName): bool;
 

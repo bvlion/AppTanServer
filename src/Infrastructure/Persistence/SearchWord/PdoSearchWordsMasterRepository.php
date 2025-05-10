@@ -50,19 +50,19 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
     return (int) $stmt->fetchColumn() > 0;
   }
 
-  public function existsGeneratedWords(string $packageName, string $word): array
+  public function existsGeneratedWords(string $packageName, string $appName): array
   {
     $sql = <<<SQL
-      SELECT package_name, word, app_name, source, created_at
+      SELECT package_name, word, app_name, source
       FROM search_words_master
       WHERE package_name = :package_name
-        AND word = :word
+        AND app_name = :app_name
     SQL;
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute([
       ':package_name' => $packageName,
-      ':word' => $word,
+      ':app_name' => $appName,
     ]);
 
     $results = [];
@@ -72,7 +72,6 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
         $row['word'],
         $row['app_name'],
         $row['source'],
-        $row['created_at']
       );
     }
 
