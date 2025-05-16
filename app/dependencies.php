@@ -13,7 +13,8 @@ use App\Application\Service\SearchWord\{
     EventIngestionService,
     FeedbackUpdateService,
     MasterProjectionService,
-    AIWordGenerator
+    AIWordGenerator,
+    GcfCaller
 };
 use App\Domain\SearchWordEvent\SearchWordEventRepository;
 use App\Domain\SearchWordFeedback\SearchWordFeedbackRepository;
@@ -67,9 +68,21 @@ return function (ContainerBuilder $containerBuilder) {
     SearchWordFeedbackRepository::class => \DI\autowire(PdoSearchWordFeedbackRepository::class),
     SearchWordsMasterRepository::class => \DI\autowire(PdoSearchWordsMasterRepository::class),
 
+    Client::class => function () {
+      return new Client();
+    },
+
+    GcfCaller::class => function (ContainerInterface $c) {
+      return new GcfCaller(
+        $_ENV['GCF_AUDIENCE'],
+        $_ENV['RESOURCES_DIR'] . 'sa-caller.json',
+        $c->get(Client::class)
+      );
+    },
+
     AIWordGenerator::class => function (ContainerInterface $c) {
       return new AIWordGenerator(
-        new Client(),
+        $c->get(Client::class),
         $_ENV['OPENAI_API_KEY']
       );
     },

@@ -36,6 +36,7 @@ class MastersBatchAction extends Action
 
       $results[$entry['packageName']] = array_map(fn($m) => [
         'word' => $m->getWord(),
+        'kana' => $m->getKana(),
         'appName' => $m->getAppName(),
       ], $masters);
     }

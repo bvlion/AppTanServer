@@ -1,6 +1,7 @@
 FROM php:8.2-apache-bullseye
 
-RUN apt-get update && apt-get install -y git zip unzip libzip-dev curl gnupg
+RUN apt-get update && apt-get install -y git zip unzip libzip-dev curl gnupg libmecab-dev mecab mecab-ipadic-utf8
+
 
 COPY php-base.ini $PHP_INI_DIR/conf.d/
 

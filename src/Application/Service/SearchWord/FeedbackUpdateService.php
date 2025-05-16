@@ -15,22 +15,15 @@ class FeedbackUpdateService
 
   public function updateFromEvent(SearchWordEvent $event): void
   {
-    $type = $event->getEventType();
-
-    $map = [
-      'add' => [1, 0, 0, 0],
-      're_add' => [0, 1, 0, 0],
-      'remove' => [0, 0, 1, 0],
-      'launch' => [0, 0, 0, 1],
-    ];
-
-    [$a, $r, $d, $l] = $map[$type] ?? [0, 0, 0, 0];
-
-    if ($a + $r + $d + $l > 0) {
+    $counts = $event->getEventType()->getFeedbackCounts();
+    if (array_sum($counts) > 0) {
       $this->feedbackRepository->incrementCounts(
         $event->getPackageName(),
         $event->getWord(),
-        $a, $r, $d, $l
+        $counts['add'],
+        $counts['re_add'],
+        $counts['remove'],
+        $counts['launch']
       );
     }
   }

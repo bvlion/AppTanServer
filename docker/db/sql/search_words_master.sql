@@ -2,6 +2,7 @@
 CREATE TABLE search_words_master (
   package_name VARCHAR(255) NOT NULL,
   word VARCHAR(255) NOT NULL,
+  kana VARCHAR(255) NOT NULL DEFAULT '',
   app_name VARCHAR(255) NOT NULL,
   source ENUM('ai_generated', 'imported') DEFAULT 'ai_generated',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

@@ -16,9 +16,9 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
   {
     $sql = <<<SQL
       INSERT INTO search_words_master (
-        package_name, word, app_name, source
+        package_name, word, kana, app_name, source
       ) VALUES (
-        :package_name, :word, :app_name, :source
+        :package_name, :word, :kana, :app_name, :source
       )
     SQL;
 
@@ -26,6 +26,7 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
     $stmt->execute([
       ':package_name' => $master->getPackageName(),
       ':word' => $master->getWord(),
+      ':kana' => $master->getKana(),
       ':app_name' => $master->getAppName(),
       ':source' => $master->getSource(),
     ]);
@@ -81,7 +82,7 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
   public function findByPackageAndAppName(string $packageName, string $appName): array
   {
     $sql = <<<SQL
-      SELECT package_name, word, app_name, source
+      SELECT package_name, word, kana, app_name, source
       FROM search_words_master
       WHERE package_name = :package_name AND app_name = :app_name
       ORDER BY created_at DESC
@@ -98,6 +99,7 @@ class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
       $results[] = new SearchWordsMaster(
         $row['package_name'],
         $row['word'],
+        $row['kana'],
         $row['app_name'],
         $row['source'],
       );

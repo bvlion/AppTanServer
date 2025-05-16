@@ -41,7 +41,7 @@ class PdoSearchWordEventRepository implements SearchWordEventRepository
     $stmt->execute([
       ':package_name' => $event->getPackageName(),
       ':word' => $event->getWord(),
-      ':event_type' => $event->getEventType(),
+      ':event_type' => $event->getEventType()->value,
       ':event_weight' => $event->getEventWeight(),
       ':context' => $contextJson,
       ':timestamp' => $event->getTimestamp()->format('Y-m-d H:i:s'),

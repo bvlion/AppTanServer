@@ -19,10 +19,10 @@ class EventIngestionService
   {
     $this->repository->save($event);
 
-    match ($event->getEventType()) {
-      'init', 'refresh' => $this->masterService->updateFromInitOrRefresh($event),
-      'ai_generated', 'imported' => $this->masterService->registerGeneratedWord($event),
-      'add', 're_add', 'remove', 'launch' => $this->feedbackService->updateFromEvent($event),
+    match (true) {
+      $event->getEventType()->isForMasterUpdate() => $this->masterService->updateFromInitOrRefresh($event),
+      $event->getEventType()->isForWordGeneration() => $this->masterService->registerGeneratedWord($event),
+      $event->getEventType()->isForFeedback() => $this->feedbackService->updateFromEvent($event),
       default => null,
     };
   }

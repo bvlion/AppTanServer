@@ -29,7 +29,7 @@ class AIWordGenerator
    */
   public function generateWords(string $appName, string $packageName, ?string $description): array
   {
-    $promptPath = __DIR__ . '/../../../../resources/generate_search_words.txt';
+    $promptPath = $_ENV['RESOURCES_DIR'] . 'generate_search_words.txt';
     $systemPrompt = file_get_contents($promptPath);
     if ($systemPrompt === false) {
       throw new \RuntimeException("プロンプトファイルの読み込みに失敗しました: {$promptPath}");
@@ -65,10 +65,10 @@ class AIWordGenerator
     }
 
     $json = json_decode($content, true);
-    if (!is_array($json) || !isset($json['searchWords'])) {
+    if (!is_array($json) || !isset($json['mainWords'], $json['readings'])) {
       throw new \RuntimeException('Unexpected response format from OpenAI');
     }
 
-    return $json['searchWords'];
+    return array_merge($json['mainWords'], $json['readings']);
   }
 }
