@@ -20,12 +20,12 @@ return function (ContainerBuilder $containerBuilder) {
           'level' => Logger::DEBUG,
         ],
         'db' => [
-          'host' =>    getenv('DB_HOST') ?: 'db',
-          'port' =>    getenv('DB_PORT') ?: '3306',
-          'dbname' =>  getenv('DB_NAME') ?: 'at',
-          'user' =>    getenv('DB_USER') ?: 'user',
-          'pass' =>    getenv('DB_PASS') ?: 'password',
-          'charset' => getenv('DB_CHARSET') ?: 'utf8mb4',
+          'host' =>    $_ENV['DB_HOST'],
+          'port' =>    $_ENV['DB_PORT'],
+          'dbname' =>  $_ENV['DB_NAME'],
+          'user' =>    $_ENV['DB_USER'],
+          'pass' =>    $_ENV['DB_PASS'],
+          'charset' => $_ENV['DB_CHARSET'],
         ],
       ]);
     }
