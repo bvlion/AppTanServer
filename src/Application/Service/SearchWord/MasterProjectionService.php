@@ -89,7 +89,7 @@ class MasterProjectionService
 
   private function getKana(string $word): string
   {
-    exec('echo ' . $word . ' | ' . $_ENV['MECAB'] . ' -Oyomi', $res);
+    exec('echo ' . escapeshellarg($word) . ' | ' . $_ENV['MECAB_PATH'] . ' -Oyomi', $res);
     if (count($res) === 0) {
       return '';
     }

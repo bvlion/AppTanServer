@@ -29,7 +29,7 @@ class AIWordGenerator
    */
   public function generateWords(string $appName, string $packageName, ?string $description): array
   {
-    $promptPath = $_ENV['RESOURCES_DIR'] . 'generate_search_words.txt';
+    $promptPath = $_ENV['ROOT_PATH'] . '/resources/generate_search_words.txt';
     $systemPrompt = file_get_contents($promptPath);
     if ($systemPrompt === false) {
       throw new \RuntimeException("プロンプトファイルの読み込みに失敗しました: {$promptPath}");

@@ -19,11 +19,13 @@ use App\Application\Service\SearchWord\{
 use App\Domain\SearchWordEvent\SearchWordEventRepository;
 use App\Domain\SearchWordFeedback\SearchWordFeedbackRepository;
 use App\Domain\SearchWordsMaster\SearchWordsMasterRepository;
+use App\Domain\ProcessingRequest\ProcessingRequestRepository;
 use App\Infrastructure\Persistence\SearchWord\{
     PdoSearchWordEventRepository,
     PdoSearchWordFeedbackRepository,
     PdoSearchWordsMasterRepository
 };
+use App\Infrastructure\Persistence\ProcessingRequest\PdoProcessingRequestRepository;
 use GuzzleHttp\Client;
 
 return function (ContainerBuilder $containerBuilder) {
@@ -67,6 +69,7 @@ return function (ContainerBuilder $containerBuilder) {
     SearchWordEventRepository::class => \DI\autowire(PdoSearchWordEventRepository::class),
     SearchWordFeedbackRepository::class => \DI\autowire(PdoSearchWordFeedbackRepository::class),
     SearchWordsMasterRepository::class => \DI\autowire(PdoSearchWordsMasterRepository::class),
+    ProcessingRequestRepository::class => \DI\autowire(PdoProcessingRequestRepository::class),
 
     Client::class => function () {
       return new Client();
@@ -75,7 +78,7 @@ return function (ContainerBuilder $containerBuilder) {
     GcfCaller::class => function (ContainerInterface $c) {
       return new GcfCaller(
         $_ENV['GCF_AUDIENCE'],
-        $_ENV['RESOURCES_DIR'] . 'sa-caller.json',
+        $_ENV['ROOT_PATH'] . '/resources/sa-caller.json',
         $c->get(Client::class)
       );
     },
