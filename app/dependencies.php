@@ -86,7 +86,8 @@ return function (ContainerBuilder $containerBuilder) {
     AIWordGenerator::class => function (ContainerInterface $c) {
       return new AIWordGenerator(
         $c->get(Client::class),
-        $_ENV['OPENAI_API_KEY']
+        $_ENV['OPENAI_API_KEY'],
+        'gpt-5-nano'
       );
     },
 

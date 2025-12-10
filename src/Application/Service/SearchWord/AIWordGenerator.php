@@ -11,11 +11,13 @@ class AIWordGenerator
 {
   private Client $client;
   private string $apiKey;
+  private string $model;
 
-  public function __construct(Client $client, string $apiKey)
+  public function __construct(Client $client, string $apiKey, string $model)
   {
     $this->client = $client;
     $this->apiKey = $apiKey;
+    $this->model = $model;
   }
 
   /**
@@ -44,13 +46,11 @@ class AIWordGenerator
           'Content-Type'  => 'application/json',
         ],
         'json' => [
-          'model' => 'gpt-4o-mini',
+          'model' => $this->model,
           'messages' => [
             ['role' => 'system', 'content' => $systemPrompt],
             ['role' => 'user', 'content' => $userPrompt],
           ],
-          'temperature' => 0.3,
-          'max_tokens' => 300,
         ]
       ]);
     } catch (GuzzleException $e) {
