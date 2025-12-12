@@ -1,0 +1,58 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Cache node_modules production packages
+      uses: actions/cache@v4
+      with:
+          path: ./vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+    - name: composer install
+      run: docker compose up composer_production --build
+
+    - name: Generate .env file
+      run: echo "${{ secrets.PRODUCTION_ENV }}" | base64 -d > .env
+
+    - name: Delete unused files
+      run: |
+        rm -rf .git
+        rm -rf .github
+        rm -rf docker
+        rm -rf logs
+        rm -rf node
+        rm -rf tests
+        rm -rf var
+        rm -f .coveralls.yml
+        rm -f .env.sample
+        rm -f .gitignore
+        rm -f composer*
+        rm -f docker-compose.yml
+        rm -f php*
+        rm -f docs
+
+    - name: Deploy via rsync
+      run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" --delete ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.TARGET_DIR }}
