@@ -19,7 +19,7 @@
     "google-play-scraper": "^10.1.2"
   },
   "devDependencies": {
-    "eslint": "^8.15.0",
+    "eslint": "^9.39.2",
     "eslint-config-google": "^0.14.0",
     "firebase-functions-test": "^3.1.0",
     "firebase-tools": "^14.2.1"
