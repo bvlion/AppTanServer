@@ -1,16 +1,40 @@
-name: Tests
+name: Tests PHP
 
 on:
   pull_request:
 
 jobs:
   tests:
-    name: Tests PHP 
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Detect PHP changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            php:
+              - 'composer.json'
+              - 'composer.lock'
+              - 'phpunit.xml'
+              - 'phpcs.xml'
+              - 'phpstan.neon.dist'
+              - 'src/**'
+              - 'tests/**'
+              - 'app/**'
+              - '.github/workflows/tests-php.yml'
+
+      - name: Guard / skip if no PHP changes
+        env:
+          RUN_PHP: ${{ steps.changes.outputs.php }}
+        run: |
+          if [ "$RUN_PHP" != "true" ]; then
+            echo "No PHP changes; skipping.";
+            exit 0;
+          fi
 
       - name: Set up PHP 8.2
         uses: shivammathur/setup-php@v2

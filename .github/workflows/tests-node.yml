@@ -1,0 +1,43 @@
+name: Tests Node
+
+on:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Detect node changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            node:
+              - 'node/functions/**'
+              - '.github/workflows/tests-node.yml'
+
+      - name: Guard / skip if no node changes
+        env:
+          RUN_NODE: ${{ steps.changes.outputs.node }}
+        run: |
+          if [ "$RUN_NODE" != "true" ]; then
+            echo "No node/functions changes; skipping.";
+            exit 0;
+          fi
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: node/functions
+
+      - name: Tests
+        run: npm test
+        working-directory: node/functions
