@@ -4,25 +4,9 @@ on:
   pull_request:
 
 jobs:
-  changes:
+  tests:
     runs-on: ubuntu-latest
-    outputs:
-      node: ${{ steps.filter.outputs.node }}
-    steps:
-      - uses: actions/checkout@v4
 
-      - id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            node:
-              - 'node/functions/**'
-              - '.github/workflows/tests-node.yml'
-
-  node-tests:
-    needs: changes
-    if: needs.changes.outputs.node == 'true'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 

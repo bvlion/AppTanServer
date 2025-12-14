@@ -4,32 +4,9 @@ on:
   pull_request:
 
 jobs:
-  changes:
+  tests:
     runs-on: ubuntu-latest
-    outputs:
-      php: ${{ steps.filter.outputs.php }}
-    steps:
-      - uses: actions/checkout@v4
 
-      - id: filter
-        uses: dorny/paths-filter@v3
-        with:
-          filters: |
-            php:
-              - 'composer.json'
-              - 'composer.lock'
-              - 'phpunit.xml'
-              - 'phpcs.xml'
-              - 'phpstan.neon.dist'
-              - 'src/**'
-              - 'tests/**'
-              - 'app/**'
-              - '.github/workflows/tests-php.yml'
-
-  php-tests:
-    needs: changes
-    if: needs.changes.outputs.php == 'true'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
