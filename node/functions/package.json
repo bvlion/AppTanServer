@@ -16,7 +16,7 @@
   "main": "index.mjs",
   "dependencies": {
     "firebase-functions": "^6.0.1",
-    "google-play-scraper": "^10.0.1"
+    "google-play-scraper": "^10.1.2"
   },
   "devDependencies": {
     "eslint": "^8.15.0",
