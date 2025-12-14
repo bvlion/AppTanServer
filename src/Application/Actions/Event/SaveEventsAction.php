@@ -9,7 +9,7 @@ use App\Application\Actions\ActionPayload;
 use App\Application\Service\SearchWord\EventIngestionService;
 use App\Domain\SearchWordEvent\EventType;
 use App\Domain\SearchWordEvent\SearchWordEvent;
-use Slim\Psr7\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
 
 class SaveEventsAction extends Action
@@ -52,7 +52,8 @@ class SaveEventsAction extends Action
     }
 
     return $this->respond(new ActionPayload(
-      statusCode: 200, data: ['status' => 'ok']
+      statusCode: 200,
+      data: ['status' => 'ok']
     ));
   }
 }

@@ -34,13 +34,34 @@ class SearchWordEvent implements JsonSerializable
     $this->timestamp = $timestamp;
   }
 
-  public function getId(): ?int { return $this->id; }
-  public function getPackageName(): string { return $this->packageName; }
-  public function getWord(): string { return $this->word; }
-  public function getEventType(): EventType { return $this->eventType; }
-  public function getEventWeight(): float { return $this->eventWeight; }
-  public function getContext(): ?array { return $this->context; }
-  public function getTimestamp(): ?\DateTime { return $this->timestamp; }
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
+  public function getPackageName(): string
+  {
+    return $this->packageName;
+  }
+  public function getWord(): string
+  {
+    return $this->word;
+  }
+  public function getEventType(): EventType
+  {
+    return $this->eventType;
+  }
+  public function getEventWeight(): float
+  {
+    return $this->eventWeight;
+  }
+  public function getContext(): ?array
+  {
+    return $this->context;
+  }
+  public function getTimestamp(): ?\DateTime
+  {
+    return $this->timestamp;
+  }
 
   #[\ReturnTypeWillChange]
   public function jsonSerialize(): array

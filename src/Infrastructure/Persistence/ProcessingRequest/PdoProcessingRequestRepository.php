@@ -11,7 +11,9 @@ use PDO;
 
 class PdoProcessingRequestRepository implements ProcessingRequestRepository
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(private PDO $pdo)
+  {
+  }
 
   public function findFailed(): array
   {
@@ -70,7 +72,7 @@ class PdoProcessingRequestRepository implements ProcessingRequestRepository
       return false;
     }
 
-    // ステータスを in_progress に更新
+      // ステータスを in_progress に更新
     $stmt = $this->pdo->prepare("
       UPDATE processing_requests
       SET status = 'in_progress', updated_at = NOW()

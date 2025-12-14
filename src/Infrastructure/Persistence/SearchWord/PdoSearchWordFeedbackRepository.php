@@ -9,7 +9,9 @@ use PDO;
 
 class PdoSearchWordFeedbackRepository implements SearchWordFeedbackRepository
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(private PDO $pdo)
+  {
+  }
 
   public function incrementCounts(
     string $packageName,

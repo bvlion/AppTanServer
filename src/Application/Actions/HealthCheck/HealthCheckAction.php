@@ -10,7 +10,9 @@ use App\Application\Actions\Action;
 
 class HealthCheckAction extends Action
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(private PDO $pdo)
+  {
+  }
   /**
    * {@inheritdoc}
    */

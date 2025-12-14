@@ -18,4 +18,3 @@ interface ProcessingRequestRepository
     ProcessingStatus $status
   ): void;
 }
-

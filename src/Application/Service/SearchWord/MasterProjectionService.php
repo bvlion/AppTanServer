@@ -17,7 +17,8 @@ class MasterProjectionService
     private SearchWordsMasterRepository $masterRepository,
     private AIWordGenerator $generator,
     private GcfCaller $gcfCaller
-  ) {}
+  ) {
+  }
 
   public function updateFromInitOrRefresh(SearchWordEvent $event): void
   {
@@ -35,7 +36,7 @@ class MasterProjectionService
         }
       }
       // 2つの読みと5個未満の単語と、タイトルとパッケージだけでは生成できない場合は1度スクレイピングする
-      if ((count($words) < 7 || $hasLowWeight) && !$event->getEventType() !== 'scraping-init') {
+      if ((count($words) < 7 || $hasLowWeight) && $event->getEventType() !== EventType::ScrapingInit) {
         $newEvent = new SearchWordEvent(
           id: null,
           packageName: $package,
@@ -94,7 +95,7 @@ class MasterProjectionService
       return '';
     }
     return preg_replace_callback('/[ァ-ヶー]+/u', function ($matches) {
-      return mb_convert_kana($matches[0], 'c', 'UTF-8');
+        return mb_convert_kana($matches[0], 'c', 'UTF-8');
     }, $res[0]);
   }
 }

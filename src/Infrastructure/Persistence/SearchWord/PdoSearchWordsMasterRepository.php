@@ -10,7 +10,9 @@ use PDO;
 
 class PdoSearchWordsMasterRepository implements SearchWordsMasterRepository
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(private PDO $pdo)
+  {
+  }
 
   public function insert(SearchWordsMaster $master): void
   {

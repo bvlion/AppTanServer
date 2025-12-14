@@ -37,14 +37,38 @@ class SearchWordFeedback implements JsonSerializable
     $this->updatedAt = $updatedAt;
   }
 
-  public function getPackageName(): string { return $this->packageName; }
-  public function getWord(): string { return $this->word; }
-  public function getAddedCount(): int { return $this->addedCount; }
-  public function getReAddedCount(): int { return $this->reAddedCount; }
-  public function getDeletedCount(): int { return $this->deletedCount; }
-  public function getLaunchCount(): int { return $this->launchCount; }
-  public function getCreatedAt(): ?\DateTime { return $this->createdAt; }
-  public function getUpdatedAt(): ?\DateTime { return $this->updatedAt; }
+  public function getPackageName(): string
+  {
+    return $this->packageName;
+  }
+  public function getWord(): string
+  {
+    return $this->word;
+  }
+  public function getAddedCount(): int
+  {
+    return $this->addedCount;
+  }
+  public function getReAddedCount(): int
+  {
+    return $this->reAddedCount;
+  }
+  public function getDeletedCount(): int
+  {
+    return $this->deletedCount;
+  }
+  public function getLaunchCount(): int
+  {
+    return $this->launchCount;
+  }
+  public function getCreatedAt(): ?\DateTime
+  {
+    return $this->createdAt;
+  }
+  public function getUpdatedAt(): ?\DateTime
+  {
+    return $this->updatedAt;
+  }
 
   #[\ReturnTypeWillChange]
   public function jsonSerialize(): array

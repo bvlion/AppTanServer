@@ -13,7 +13,8 @@ class ProcessingRequest implements JsonSerializable
     private string $appName,
     private ProcessingStatus $status,
     private ?\DateTime $updatedAt = null
-  ) {}
+  ) {
+  }
 
   public function getPackageName(): string
   {
@@ -45,4 +46,3 @@ class ProcessingRequest implements JsonSerializable
     ];
   }
 }
-

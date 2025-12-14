@@ -63,8 +63,10 @@ class AuthMiddlewareTest extends TestCase
     $middleware = new AuthMiddleware(new NullLogger());
     $request = (new ServerRequestFactory())->createServerRequest('GET', '/protected')
       ->withHeader('Authorization', 'Bearer secret');
-    $handler = new class($this->responseFactory) implements RequestHandlerInterface {
-      public function __construct(private ResponseFactory $factory) {}
+    $handler = new class ($this->responseFactory) implements RequestHandlerInterface {
+      public function __construct(private ResponseFactory $factory)
+      {
+      }
       public function handle(\Psr\Http\Message\ServerRequestInterface $request): ResponseInterface
       {
         return $this->factory->createResponse(200);

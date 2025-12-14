@@ -31,12 +31,30 @@ class SearchWordsMaster implements JsonSerializable
     $this->createdAt = $createdAt;
   }
 
-  public function getPackageName(): string { return $this->packageName; }
-  public function getWord(): string { return $this->word; }
-  public function getKana(): string { return $this->kana; }
-  public function getAppName(): string { return $this->appName; }
-  public function getSource(): string { return $this->source; }
-  public function getCreatedAt(): ?\DateTime { return $this->createdAt; }
+  public function getPackageName(): string
+  {
+    return $this->packageName;
+  }
+  public function getWord(): string
+  {
+    return $this->word;
+  }
+  public function getKana(): string
+  {
+    return $this->kana;
+  }
+  public function getAppName(): string
+  {
+    return $this->appName;
+  }
+  public function getSource(): string
+  {
+    return $this->source;
+  }
+  public function getCreatedAt(): ?\DateTime
+  {
+    return $this->createdAt;
+  }
 
   #[\ReturnTypeWillChange]
   public function jsonSerialize(): array

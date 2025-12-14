@@ -6,7 +6,6 @@ namespace App\Application\Service\SearchWord;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-
 use Google\Auth\ApplicationDefaultCredentials;
 
 class GcfCaller
@@ -42,7 +41,6 @@ class GcfCaller
       $json = json_decode($response->getBody()->getContents(), true);
 
       return $json['description'] ?? '';
-
     } catch (RequestException $e) {
       throw new \RuntimeException("GCF 呼び出しに失敗しました: " . $e->getMessage(), 0, $e);
     }

@@ -13,7 +13,8 @@ class EventIngestionService
     private SearchWordEventRepository $repository,
     private MasterProjectionService $masterService,
     private FeedbackUpdateService $feedbackService
-  ) {}
+  ) {
+  }
 
   public function ingest(SearchWordEvent $event): void
   {

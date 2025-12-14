@@ -11,7 +11,8 @@ class FeedbackUpdateService
 {
   public function __construct(
     private SearchWordFeedbackRepository $feedbackRepository
-  ) {}
+  ) {
+  }
 
   public function updateFromEvent(SearchWordEvent $event): void
   {

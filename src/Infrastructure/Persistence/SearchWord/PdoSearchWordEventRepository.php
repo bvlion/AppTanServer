@@ -10,7 +10,9 @@ use PDO;
 
 class PdoSearchWordEventRepository implements SearchWordEventRepository
 {
-  public function __construct(private PDO $pdo) {}
+  public function __construct(private PDO $pdo)
+  {
+  }
 
   public function save(SearchWordEvent $event): void
   {
@@ -35,8 +37,8 @@ class PdoSearchWordEventRepository implements SearchWordEventRepository
     $stmt = $this->pdo->prepare($sql);
 
     $contextJson = $event->getContext() !== null
-      ? json_encode($event->getContext(), JSON_UNESCAPED_UNICODE)
-      : null;
+    ? json_encode($event->getContext(), JSON_UNESCAPED_UNICODE)
+    : null;
 
     $stmt->execute([
       ':package_name' => $event->getPackageName(),

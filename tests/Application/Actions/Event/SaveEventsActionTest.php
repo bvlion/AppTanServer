@@ -20,7 +20,7 @@ class SaveEventsActionTest extends TestCase
     $ingestion = $this->createMock(EventIngestionService::class);
     $ingestion->expects($this->never())->method('ingest');
 
-    $action = new class(new NullLogger(), $ingestion) extends SaveEventsAction {
+    $action = new class (new NullLogger(), $ingestion) extends SaveEventsAction {
       protected function getFormData()
       {
         return 'invalid';
@@ -42,7 +42,7 @@ class SaveEventsActionTest extends TestCase
     $ingested = [];
     $ingestion = $this->createMock(EventIngestionService::class);
     $ingestion->method('ingest')->willReturnCallback(function (SearchWordEvent $event) use (&$ingested) {
-      $ingested[] = $event;
+        $ingested[] = $event;
     });
     $ingestion->expects($this->once())->method('ingest');
 

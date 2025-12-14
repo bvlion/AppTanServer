@@ -20,7 +20,8 @@ class AuthMiddleware implements Middleware
 
   public function __construct(
     private LoggerInterface $logger
-  ) {}
+  ) {
+  }
 
   /**
    * {@inheritdoc}

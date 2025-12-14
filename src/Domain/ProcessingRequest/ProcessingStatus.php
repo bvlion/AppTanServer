@@ -22,4 +22,3 @@ enum ProcessingStatus: string
     };
   }
 }
-

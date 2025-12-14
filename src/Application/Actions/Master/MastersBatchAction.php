@@ -13,7 +13,8 @@ class MastersBatchAction extends Action
 {
   public function __construct(
     protected SearchWordsMasterRepository $repository
-  ) {}
+  ) {
+  }
 
   protected function action(): Response
   {
@@ -42,7 +43,8 @@ class MastersBatchAction extends Action
     }
 
     return $this->respond(new ActionPayload(
-      statusCode: 200, data: $results
+      statusCode: 200,
+      data: $results
     ));
   }
 }
