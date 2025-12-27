@@ -23,12 +23,17 @@ class GcfCaller
 
   public function fetchDescriptionByPackageName($packageName): string
   {
-    putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $this->credentialsPath);
-    $credentials = ApplicationDefaultCredentials::getIdTokenCredentials($this->audience);
-    $authToken = $credentials->fetchAuthToken();
-    $idToken = $authToken['id_token'];
+    $idToken = '';
+    $accessUrl = 'http://host.docker.internal:5001/apptan/us-central1/scrape';
+    if (trim($this->audience) !== '') {
+      putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $this->credentialsPath);
+      $credentials = ApplicationDefaultCredentials::getIdTokenCredentials($this->audience);
+      $authToken = $credentials->fetchAuthToken();
+      $idToken = $authToken['id_token'];
+      $accessUrl = $this->audience;
+    }
     try {
-      $response = $this->client->request('GET', $this->audience, [
+      $response = $this->client->request('GET', $accessUrl, [
         'headers' => [
           'Authorization' => "Bearer $idToken",
           'Accept' => 'application/json',

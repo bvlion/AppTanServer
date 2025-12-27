@@ -3,11 +3,8 @@ name: deploy
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'main'
-    paths:
-      - 'node/**'
-      - '.github/workflows/deploy-cloudfunctions.yml'
+    tags:
+      - 'v*'
 
 jobs:
   deploy:
