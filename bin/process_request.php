@@ -64,7 +64,43 @@ try {
   echo "Done: $packageName - $appName\n";
 
 } catch (Throwable $e) {
-  $requestRepository->updateStatus($packageName, $appName, ProcessingStatus::Failed);
-  fwrite(STDERR, "Error: {$e->getMessage()}\n");
+  $lines = [];
+
+  $lines[] = '[Exception]';
+  $lines[] = '  class=' . get_class($e);
+  $lines[] = '  message=' . $e->getMessage();
+  $lines[] = '  code=' . (string) $e->getCode();
+  $lines[] = '  at=' . $e->getFile() . ':' . $e->getLine();
+
+  // 例: Guzzle など「レスポンスを持つ例外」の場合に拾う
+  if (method_exists($e, 'getResponse')) {
+    $response = $e->getResponse();
+    if ($response !== null) {
+      if (method_exists($response, 'getStatusCode')) {
+        $lines[] = '  http_status=' . (string) $response->getStatusCode();
+      }
+
+      if (method_exists($response, 'getHeaderLine')) {
+        $contentType = $response->getHeaderLine('Content-Type');
+        if ($contentType !== '') {
+          $lines[] = '  content_type=' . $contentType;
+        }
+      }
+
+      if (method_exists($response, 'getBody')) {
+        $responseBody = (string) $response->getBody();
+        $lines[] = '  response_body_head=' . substr($responseBody, 0, 1000);
+      }
+    }
+  }
+
+  $lines[] = '  trace:';
+  $traceLines = preg_split('/\R/', $e->getTraceAsString()) ?: [];
+  foreach ($traceLines as $traceLine) {
+    $lines[] = '    ' . $traceLine;
+  }
+
+  fwrite(STDERR, implode("\n", $lines) . "\n");
+
   exit(1);
 }

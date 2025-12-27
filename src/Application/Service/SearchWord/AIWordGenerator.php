@@ -66,7 +66,8 @@ class AIWordGenerator
 
     $json = json_decode($content, true);
     if (!is_array($json) || !isset($json['mainWords'], $json['readings'])) {
-      throw new \RuntimeException('Unexpected response format from OpenAI');
+      throw new \RuntimeException("Unexpected response format from OpenAI\nJson: "
+        . json_encode($json, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
     }
 
     return array_merge($json['mainWords'], $json['readings']);
