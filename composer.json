@@ -4,7 +4,7 @@
     "require": {
         "php": "^8.1",
         "ext-json": "*",
-        "google/auth": "^1.49",
+        "google/auth": "^1.50",
         "guzzlehttp/guzzle": "^7.10",
         "monolog/monolog": "^3.9",
         "php-di/php-di": "^7.1",
