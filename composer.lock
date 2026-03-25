@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80b4de201e14b159e0cbb67c128c86ff",
+    "content-hash": "6c6b8433a0d81a3b1ebc6fb2e7859795",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -64,16 +64,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.11.1",
+            "version": "v7.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66"
+                "reference": "28aa0694bcfdfa5e2959c394d5a1ee7a5083629e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
-                "reference": "d1e91ecf8c598d073d0995afa8cd5c75c6e19e66",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/28aa0694bcfdfa5e2959c394d5a1ee7a5083629e",
+                "reference": "28aa0694bcfdfa5e2959c394d5a1ee7a5083629e",
                 "shasum": ""
             },
             "require": {
@@ -121,36 +121,36 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.11.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v7.0.3"
             },
-            "time": "2025-04-09T20:32:01+00:00"
+            "time": "2026-02-25T22:16:40+00:00"
         },
         {
             "name": "google/auth",
-            "version": "v1.49.0",
+            "version": "v1.50.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-auth-library-php.git",
-                "reference": "68e3d88cb59a49f713e3db25d4f6bb3cc0b70764"
+                "reference": "870c17ee3a1d73338d39a9ffa77a700ba77f5a83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/68e3d88cb59a49f713e3db25d4f6bb3cc0b70764",
-                "reference": "68e3d88cb59a49f713e3db25d4f6bb3cc0b70764",
+                "url": "https://api.github.com/repos/googleapis/google-auth-library-php/zipball/870c17ee3a1d73338d39a9ffa77a700ba77f5a83",
+                "reference": "870c17ee3a1d73338d39a9ffa77a700ba77f5a83",
                 "shasum": ""
             },
             "require": {
-                "firebase/php-jwt": "^6.0",
+                "firebase/php-jwt": "^6.0||^7.0",
                 "guzzlehttp/guzzle": "^7.4.5",
                 "guzzlehttp/psr7": "^2.4.5",
                 "php": "^8.1",
                 "psr/cache": "^2.0||^3.0",
                 "psr/http-message": "^1.1||^2.0",
-                "psr/log": "^3.0"
+                "psr/log": "^2.0||^3.0"
             },
             "require-dev": {
                 "guzzlehttp/promises": "^2.0",
-                "kelvinmo/simplejwt": "0.7.1",
+                "kelvinmo/simplejwt": "^1.1.0",
                 "phpseclib/phpseclib": "^3.0.35",
                 "phpspec/prophecy-phpunit": "^2.1",
                 "phpunit/phpunit": "^9.6",
@@ -158,7 +158,7 @@
                 "squizlabs/php_codesniffer": "^4.0",
                 "symfony/filesystem": "^6.3||^7.3",
                 "symfony/process": "^6.0||^7.0",
-                "webmozart/assert": "^1.11"
+                "webmozart/assert": "^1.11||^2.0"
             },
             "suggest": {
                 "phpseclib/phpseclib": "May be used in place of OpenSSL for signing strings or for token management. Please require version ^2."
@@ -183,9 +183,9 @@
             "support": {
                 "docs": "https://cloud.google.com/php/docs/reference/auth/latest",
                 "issues": "https://github.com/googleapis/google-auth-library-php/issues",
-                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.49.0"
+                "source": "https://github.com/googleapis/google-auth-library-php/tree/v1.50.1"
             },
-            "time": "2025-11-06T21:27:55+00:00"
+            "time": "2026-03-18T20:03:29+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -460,16 +460,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.8.0",
+            "version": "2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "21dc724a0583619cd1652f673303492272778051"
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/21dc724a0583619cd1652f673303492272778051",
-                "reference": "21dc724a0583619cd1652f673303492272778051",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/7d0ed42f28e42d61352a7a79de682e5e67fec884",
+                "reference": "7d0ed42f28e42d61352a7a79de682e5e67fec884",
                 "shasum": ""
             },
             "require": {
@@ -485,6 +485,7 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "0.9.0",
+                "jshttp/mime-db": "1.54.0.1",
                 "phpunit/phpunit": "^8.5.44 || ^9.6.25"
             },
             "suggest": {
@@ -556,7 +557,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.8.0"
+                "source": "https://github.com/guzzle/psr7/tree/2.9.0"
             },
             "funding": [
                 {
@@ -572,7 +573,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-23T21:21:41+00:00"
+            "time": "2026-03-10T16:41:02+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -4565,5 +4566,5 @@
         "ext-json": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
